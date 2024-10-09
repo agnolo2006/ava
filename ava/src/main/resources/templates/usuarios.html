@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gerenciar Usuários</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Gerenciar Usuários</h1>
+        <form class="row g-3" th:action="@{/usuarios}" method="post">
+            <div class="col-md-6">
+                <label for="inputNome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Nome do Usuário" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputTelefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="inputTelefone" name="telefone" placeholder="Telefone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputTipoUsuario" class="form-label">Tipo de Usuário</label>
+                <select id="inputTipoUsuario" class="form-select" name="tipoUsuario">
+                    <option value="ADMIN">Admin</option>
+                    <option value="GERENTE">Gerente</option>
+                    <option value="FUNCIONARIO">Funcionário</option>
+                    <option value="ALUNO">Aluno</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
+            </div>
+        </form>
+
+        <h2 class="mt-4">Lista de Usuários</h2>
+        <ul class="list-group mt-3">
+            <li class="list-group-item" th:each="usuario : ${usuarios}">
+                <span th:text="${usuario.nome}">Nome</span> -
+                <span th:text="${usuario.email}">Email</span> -
+                <span th:text="${usuario.telefone}">Telefone</span>
+                <form th:action="@{/usuarios/excluir/{id}(id=${usuario.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </li>
+        </ul>
+
+        <br>
+        <a th:href="@{/}" class="btn btn-secondary mt-3">Voltar para a Página Inicial</a>
+    </div>
+</body>
+</html>
